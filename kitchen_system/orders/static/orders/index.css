@@ -102,6 +102,7 @@ nav li{
     border: none;   
     color: aliceblue;
     border-radius: 10px;
+    text-decoration: none;
     transform: translate(150%,250%);
     background-color: #f50404;
     transition-duration: 300ms;

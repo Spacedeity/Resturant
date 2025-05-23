@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloom Kitchen</title>
+    <script src="https://kit.fontawesome.com/5d065a92dc.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'orders/kitchen.css' %}">
+</head>
+<body>
+<header>
+    <div><h2 class="sp">Bloom kitchen</h2></div>
+    <nav>
+        <ul>
+            <li><a class="lik" href="{% url 'index' %}">Home</a></li>
+            <li><a class="lik" href="{% url 'kitchen' %}">Kitchen</a></li>
+            <li><a class="lik" href="{% url 'about' %}">About</a></li>
+            <li><a class="lik" href="{% url 'contact' %}">Contacts</a></li>
+        </ul>
+    </nav>
+    <div class="head"><p class="hd">Welcome to our kitchen</p></div>
+</header>
+
+{% for section in sections %}
+<section class="food">
+    {% for item in section %}
+    <div class="box">
+        <img src="{% static 'orders/images/' %}{{ item.image }}" alt="{{ item.name }}" class="ig">
+        <div class="card-body">
+              <h1 class="card-title">{{ item.name }}</h1>
+            <p class="card-des">{{ item.description }}</p>
+            <p class="pr">price {{ item.price }} /=</p>
+           <button 
+  class="order-btn" 
+  data-id="{{ item.id }}" 
+  data-name="{{ item.name }}" 
+  data-price="{{ item.price }}">
+  Order
+</button>
+
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% endfor %}
+
+
+<!-- Order Form Popup -->
+<!-- Order Popup -->
+<div id="order-popup">
+    <span id="popup-close" onclick="hidePopup()">×</span>
+   <form id="order-form">
+    {% csrf_token %}
+    <input type="hidden" id="item-id" name="item_id">
+    
+    <input type="text" id="item-name" name="item_name" readonly>
+    <input type="text" id="item-price" name="item_price" readonly>
+    
+    <input type="text" name="customer_name" placeholder="Your Name" required>
+    <input type="text" name="phone" placeholder="Phone Number" required>
+    <input type="number" name="quantity" placeholder="Quantity" required min="1">
+    <button type="submit">Confirm Order</button>
+</form>
+
+</div>
+
+<div id="confirmation">Order placed successfully!</div>
+
+
+<footer>
+    <div class="socials">
+        <h>connect</h>
+        <a class="wat" href="#"><i class="fa-brands fa-whatsapp"></i> whatsapp</a> 
+        <a class="ins" href="#"><i class="fa-brands fa-instagram"></i> instagram</a>
+        <a class="fab" href="#"><i class="fa-brands fa-facebook"></i> facebook</a>
+    </div>
+    <div class="location">
+        <h>location</h>
+        <p class="lct">kenya - mombasa county <br> bamburi area</p>
+    </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Your current code goes here
+
+ document.querySelectorAll('.order-btn').forEach(button => {
+  button.addEventListener('click', function () {
+    const itemId = button.getAttribute('data-id');
+    const itemName = button.getAttribute('data-name');
+    const itemPrice = button.getAttribute('data-price');
+
+    document.getElementById('item-id').value = itemId;
+    document.getElementById('item-name').value = itemName;
+    document.getElementById('item-price').value = itemPrice;
+
+    document.getElementById('order-popup').style.display = 'block';
+  });
+});
+
+
+  function hidePopup() {
+      document.getElementById('order-popup').style.display = 'none';
+  }
+
+  document.getElementById('order-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const form = this;
+
+      fetch("{% url 'place_order' %}", {
+          method: 'POST',
+          headers: {
+              'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+          },
+          body: new FormData(form)
+      })
+      .then(res => res.json())
+      .then(data => {
+          if (data.success) {
+              form.reset();
+              hidePopup();
+              document.getElementById('confirmation').style.display = 'block';
+              setTimeout(() => {
+                  document.getElementById('confirmation').style.display = 'none';
+              }, 3000);
+          } else {
+              alert("Failed to place order.");
+          }
+      });
+  });
+});
+</script>
+
+</body>
+</html>

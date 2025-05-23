@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://kit.fontawesome.com/5d065a92dc.js" crossorigin="anonymous"></script>
+    
+    <!-- Load CSS via Django static -->
+    <link rel="stylesheet" href="{% static 'orders/index.css' %}" />
+
+    <title>Bloom</title>
+</head>
+<body>
+    <header class="header">
+       <div><h2 class="sp">Bloom</h2></div>
+        <nav>
+            <ul>
+                <!-- Use URL patterns or relative paths here -->
+                <li><a class="lik" href="{% url 'index' %}">Home</a></li>
+                <li><a class="lik" href="{% url 'kitchen' %}">Kitchen</a></li>
+                <li><a class="lik" href="{% url 'about' %}">About</a></li>
+                <li><a class="lik" href="{% url 'contact' %}">Contacts</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="sec1">
+     <div class="box-cont">
+        <h1>Bloom Restaurant</h1>
+         <p>Home of flavours </p>
+         <button class="btn">order now</button>
+     </div>
+    </section>
+
+    <section class="sec2">
+        <div class="box-cont2"></div>
+   
+        <div class="box-cont3">
+            <h2>We care about your health ;</h2> <br>
+             <p class="desc">Feel good about the food you're ordering, Fresh off the kitchen
+                specially made for you by our top chefs.
+             </p>
+         </div>
+    </section>
+
+    <section class="sec3">
+        <div class="box-cont4">
+            <h2>Try out our seafood ;</h2> <br>
+            <p class="desc">This cuisine is inspired by the Swahili dishes
+                from Pilau, to biryani.
+            </p>
+            <p class="desc">Our restaurant is open to all.</p>
+            <br>
+            <ul class="list">
+                <li class="l-item">Monday........Friday</li>
+                <br>
+                <li class="l-item">From : 8am -- 9pm</li>
+            </ul>
+        </div>
+   
+        <div class="box-cont5">
+           <img src="{% static 'orders/images/pic3.jpg' %}" class="img" alt="Seafood Image">
+         </div>
+    </section>
+
+    <section class="sec4">
+        <br>
+        <div class="box1">
+            <img src="{% static 'orders/images/pic4.jpg' %}" class="pic" alt="Special desert">
+           <div class="card">
+            <h4 class="c-title">Special desert</h4>
+            <p class="c-text">Chocolate dip</p>
+           </div>
+        </div>
+
+        <div class="box2">
+            <img src="{% static 'orders/images/pic7.jpg' %}" class="pic" alt="Top smoothie">
+            <div class="card">
+             <h4 class="c-title">Top smoothie</h4>
+             <p class="c-text">Banana & strawberry mix</p>
+            </div>
+        </div> 
+
+        <div class="box3">
+            <img src="{% static 'orders/images/pic6.jpg' %}" class="pic" alt="Sunday special">
+            <div class="card">
+             <h4 class="c-title">Sunday special</h4>
+             <p class="c-text">Chocolate vanilla smoothie</p>
+            </div>
+        </div>
+    </section>
+
+   <footer>
+     <div class="socials">
+        <h>connect</h>
+        <a class="wat" href=""><i class="fa-brands fa-whatsapp"></i> whatsapp</a> 
+        <a class="ins" href=""><i class="fa-brands fa-instagram"></i> instagram</a>
+        <a class="fab" href=""><i class="fa-brands fa-facebook"></i> facebook</a>
+     </div>
+
+     <div class="location">
+        <h>location</h>
+        <p class="lct">kenya - mombasa county <br>bamburi area</p>
+     </div>
+   </footer>
+</body>
+</html>

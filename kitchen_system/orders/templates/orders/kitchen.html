@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Bloom Kitchen</title>
     <script src="https://kit.fontawesome.com/5d065a92dc.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'orders/kitchen.css' %}">
+    <link rel="stylesheet" href="{% static 'orders/kitchen.css' %}" />
 </head>
 <body>
 <header>
@@ -26,47 +26,41 @@
 <section class="food">
     {% for item in section %}
     <div class="box">
-        <img src="{% static 'orders/images/' %}{{ item.image }}" alt="{{ item.name }}" class="ig">
+        <img src="{% static 'orders/images/' %}{{ item.image }}" alt="{{ item.name }}" class="ig" />
         <div class="card-body">
-              <h1 class="card-title">{{ item.name }}</h1>
+            <h1 class="card-title">{{ item.name }}</h1>
             <p class="card-des">{{ item.description }}</p>
             <p class="pr">price {{ item.price }} /=</p>
-           <button 
-  class="order-btn" 
-  data-id="{{ item.id }}" 
-  data-name="{{ item.name }}" 
-  data-price="{{ item.price }}">
- <i class="fa-solid fa-plus" id="i"></i>
-</button>
-
+            <button 
+                class="order-btn" 
+                data-id="{{ item.id }}" 
+                data-name="{{ item.name }}" 
+                data-price="{{ item.price }}">
+                <i class="fa-solid fa-plus" id="i"></i>
+            </button>
         </div>
     </div>
     {% endfor %}
 </section>
 {% endfor %}
 
-
 <!-- Order Form Popup -->
-<!-- Order Popup -->
-<div id="order-popup">
+<div id="order-popup" style="display:none;">
     <span id="popup-close" onclick="hidePopup()">×</span>
-   <form id="order-form">
-    {% csrf_token %}
-    <input type="hidden" id="item-id" name="item_id">
-    
-    <input type="text" id="item-name" name="item_name" readonly>
-    <input type="text" id="item-price" name="item_price" readonly>
-    
-    <input type="text" name="customer_name" placeholder="Your Name" required>
-    <input type="text" name="phone" placeholder="Phone Number" required>
-    <input type="number" name="quantity" placeholder="Quantity" required min="1">
-    <button type="submit">Confirm Order</button>
-</form>
-
+    <form method="POST" action="{% url 'place_order' %}" id="order-form">
+        {% csrf_token %}
+        <input type="hidden" name="item_id" id="item_id" />
+        <label for="customer_name">Name:</label>
+        <input type="text" name="customer_name" required />
+        <label for="phone">Phone:</label>
+        <input type="text" name="phone" required />
+        <label for="quantity">Quantity:</label>
+        <input type="number" name="quantity" value="1" min="1" required />
+        <button type="submit" class="btn">Confirm Order</button>
+    </form>
 </div>
 
-<div id="confirmation">Order placed successfully!</div>
-
+<div id="confirmation" style="display:none;">Order placed successfully!</div>
 
 <footer>
     <div class="socials">
@@ -77,58 +71,27 @@
     </div>
     <div class="location">
         <h>location</h>
-        <p class="lct">kenya - mombasa county <br> bamburi area</p>
+        <p class="lct">kenya - mombasa county <br /> bamburi area</p>
     </div>
 </footer>
 
 <script>
+function hidePopup() {
+    document.getElementById('order-popup').style.display = 'none';
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-  // Your current code goes here
+    document.querySelectorAll('.order-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const itemId = button.getAttribute('data-id');
+            // Set the hidden input value correctly
+            document.getElementById('item_id').value = itemId;
+            // Show the popup
+            document.getElementById('order-popup').style.display = 'block';
+        });
+    });
 
- document.querySelectorAll('.order-btn').forEach(button => {
-  button.addEventListener('click', function () {
-    const itemId = button.getAttribute('data-id');
-    const itemName = button.getAttribute('data-name');
-    const itemPrice = button.getAttribute('data-price');
-
-    document.getElementById('item-id').value = itemId;
-    document.getElementById('item-name').value = itemName;
-    document.getElementById('item-price').value = itemPrice;
-
-    document.getElementById('order-popup').style.display = 'block';
-  });
-});
-
-
-  function hidePopup() {
-      document.getElementById('order-popup').style.display = 'none';
-  }
-
-  document.getElementById('order-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const form = this;
-
-      fetch("{% url 'place_order' %}", {
-          method: 'POST',
-          headers: {
-              'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
-          },
-          body: new FormData(form)
-      })
-      .then(res => res.json())
-      .then(data => {
-          if (data.success) {
-              form.reset();
-              hidePopup();
-              document.getElementById('confirmation').style.display = 'block';
-              setTimeout(() => {
-                  document.getElementById('confirmation').style.display = 'none';
-              }, 3000);
-          } else {
-              alert("Failed to place order.");
-          }
-      });
-  });
+    // No AJAX submit here, form submits normally and redirects
 });
 </script>
 

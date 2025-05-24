@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+        }
+        .receipt {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            padding: 30px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        h2 {
+            text-align: center;
+        }
+        .details {
+            margin-top: 20px;
+        }
+        .details p {
+            margin: 6px 0;
+        }
+        .print-button {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .print-button button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .print-button button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    {% if error %}
+        <h2>{{ error }}</h2>
+    {% else %}
+        <div class="receipt">
+            <h2>Lasco Restaurant</h2>
+            <hr>
+            <div class="details">
+                <p><strong>Customer:</strong> {{ order.customer_name }}</p>
+                <p><strong>Phone:</strong> {{ order.phone }}</p>
+                <p><strong>Food Item:</strong> {{ order.item.name }}</p>
+                <p><strong>Quantity:</strong> {{ order.quantity }}</p>
+                <p><strong>Unit Price:</strong> {{ order.item.price }}</p>
+                <p><strong>Total:</strong> {{ order.quantity|floatformat:2|add:""|floatformat:2|add:order.item.price }}</p>
+                <p><strong>Order Time:</strong> {{ order.timestamp }}</p>
+            </div>
+
+            <div class="print-button">
+                <button onclick="window.print()">Print Receipt</button>
+            </div>
+        </div>
+    {% endif %}
+</body>
+</html>

@@ -11,15 +11,14 @@ def kitchen_view(request):
     items = FoodItem.objects.all()
     chunked_items = chunked(items, 5)  # group items 5 per section
     return render(request, 'orders/kitchen.html', {'sections': chunked_items})
+from django.shortcuts import redirect
 
 def place_order(request):
     if request.method == 'POST':
         customer_name = request.POST.get('customer_name')
         phone = request.POST.get('phone')
         quantity = int(request.POST.get('quantity', 1))
-        item_id = request.POST.get('item_id')  
-
-        print(f"Received order: {customer_name}, {phone}, {quantity}, item_id={item_id}")
+        item_id = request.POST.get('item_id')
 
         try:
             food_item = FoodItem.objects.get(id=item_id)
@@ -29,11 +28,12 @@ def place_order(request):
                 quantity=quantity,
                 item=food_item
             )
-            return JsonResponse({'success': True})
+            return redirect('receipt', order_id=order.id)
         except FoodItem.DoesNotExist:
-            return JsonResponse({'success': False, 'error': 'Food item not found'})
+            return render(request, 'orders/receipt.html', {'error': 'Food item not found'})
     else:
-        return JsonResponse({'success': False, 'error': 'Invalid request method'})
+        return render(request, 'orders/receipt.html', {'error': 'Invalid request method'})
+
 
 def home(request):
     return render(request, 'orders/index.html')
@@ -43,3 +43,12 @@ def about_view(request):
 
 def contact_view(request):
     return render(request, 'orders/contact.html')
+    
+from django.shortcuts import get_object_or_404
+
+def receipt_view(request, order_id):
+    try:
+        order = Order.objects.get(id=order_id)
+        return render(request, 'orders/receipt.html', {'order': order})
+    except Order.DoesNotExist:
+        return render(request, 'orders/receipt.html', {'error': 'Order not found'})

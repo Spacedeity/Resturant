@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About - Bloom Kitchen</title>
+    <script src="https://kit.fontawesome.com/5d065a92dc.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'orders/kitchen.css' %}" />
+</head>
+<body>
+<header>
+    <div><h2 class="sp">Bloom Kitchen</h2></div>
+    <nav>
+        <ul>
+            <li><a class="lik" href="{% url 'index' %}">Home</a></li>
+            <li><a class="lik" href="{% url 'kitchen' %}">Kitchen</a></li>
+            <li><a class="lik active" href="{% url 'about' %}">About</a></li>
+            <li><a class="lik" href="{% url 'contact' %}">Contacts</a></li>
+        </ul>
+    </nav>
+    <div class="head"><p class="hd">About Us</p></div>
+</header>
+
+<main style="max-width: 900px; margin: 40px auto; padding: 0 15px; font-family: century;">
+    <section style="background-color: #e2620d; padding: 20px; border-radius: 8px; color: white; margin-bottom: 40px;">
+        <h2 style="color: #fff; margin-bottom: 10px;">Our Story</h2>
+        <p style="font-weight: 300; line-height: 1.5;">
+            Bloom Kitchen started as a small family-owned restaurant in 2010 in Mombasa, Kenya. Our mission has always been to bring authentic and delicious meals to our community, blending tradition with fresh, quality ingredients. Over the years, we have grown but remain committed to offering a warm, welcoming experience with every dish.
+        </p>
+    </section>
+
+    <section>
+        <h2 style="color: #990202; margin-bottom: 20px;">Meet Our Team</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
+            <!-- Reusing .box class with your orange background and shadow -->
+            <div class="box" style="width: 250px; height: auto; flex-direction: column; align-items: center; padding: 20px;">
+                <img src="{% static 'orders/images/owner.jpg' %}" alt="Owner" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; margin-bottom: 15px;" />
+                <h3 class="card-title" style="color: #990202;">Jane Doe</h3>
+                <p class="card-des" style="color: white;">Owner & Founder</p>
+            </div>
+
+            <div class="box" style="width: 250px; height: auto; flex-direction: column; align-items: center; padding: 20px;">
+                <img src="{% static 'orders/images/chef1.jpg' %}" alt="Head Chef" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; margin-bottom: 15px;" />
+                <h3 class="card-title" style="color: #990202;">Samuel Kimani</h3>
+                <p class="card-des" style="color: white;">Head Chef</p>
+            </div>
+
+            <div class="box" style="width: 250px; height: auto; flex-direction: column; align-items: center; padding: 20px;">
+                <img src="{% static 'orders/images/chef2.jpg' %}" alt="Sous Chef" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; margin-bottom: 15px;" />
+                <h3 class="card-title" style="color: #990202;">Esther Mwangi</h3>
+                <p class="card-des" style="color: white;">Sous Chef</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="socials">
+        <h>connect</h>
+        <a class="wat" href="#"><i class="fa-brands fa-whatsapp"></i> whatsapp</a> 
+        <a class="ins" href="#"><i class="fa-brands fa-instagram"></i> instagram</a>
+        <a class="fab" href="#"><i class="fa-brands fa-facebook"></i> facebook</a>
+    </div>
+    <div class="location">
+        <h>location</h>
+        <p class="lct">kenya - mombasa county <br /> bamburi area</p>
+    </div>
+</footer>
+
+</body>
+</html>

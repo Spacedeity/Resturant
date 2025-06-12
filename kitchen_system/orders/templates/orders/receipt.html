@@ -1,67 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    {% load static %}
     <title>Order Receipt</title>
+    <link rel="stylesheet" href="{% static 'orders/kitchen.css' %}">
     <style>
         body {
+            background-color: #f7f7f7;
             font-family: Arial, sans-serif;
-            padding: 40px;
+            margin: 0;
+            padding: 0;
         }
         .receipt {
             max-width: 600px;
-            margin: 0 auto;
+            margin: 40px auto;
             border: 1px solid #ddd;
             padding: 30px;
             box-shadow: 0 0 10px #ccc;
+            background-color: white;
+            border-radius: 8px;
         }
         h2 {
             text-align: center;
+            color: #2c3e50;
         }
-        .details {
-            margin-top: 20px;
+        hr {
+            border: none;
+            border-top: 2px solid #3498db;
+            margin: 15px 0 25px 0;
         }
         .details p {
             margin: 6px 0;
-        }
-        .print-button {
-            display: block;
-            text-align: center;
-            margin-top: 30px;
-        }
-        .print-button button {
-            padding: 10px 20px;
+            font-family: 'Century Gothic', Century, Arial, sans-serif;
             font-size: 16px;
-            background-color: #4CAF50;
+            color: #34495e;
+        }
+        .print-button, .payment-form {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .payment-form input[type="text"] {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 300px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .payment-form button {
+            background-color: #27ae60;
             color: white;
+            padding: 12px 20px;
+            font-size: 16px;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 300px;
         }
-        .print-button button:hover {
-            background-color: #45a049;
+        .payment-form button:hover {
+            background-color: #219150;
         }
+        .success {
+            color: #27ae60;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        label {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        @media print {
+  .print-button {
+    display: none;
+  }
+}
+
     </style>
 </head>
 <body>
-    {% if error %}
-        <h2>{{ error }}</h2>
-    {% else %}
-        <div class="receipt">
-            <h2>Lasco Restaurant</h2>
-            <hr>
-            <div class="details">
-                <p><strong>Customer:</strong> {{ order.customer_name }}</p>
-                <p><strong>Phone:</strong> {{ order.phone }}</p>
-                <p><strong>Food Item:</strong> {{ order.item.name }}</p>
-                <p><strong>Quantity:</strong> {{ order.quantity }}</p>
-                <p><strong>Unit Price:</strong> {{ order.item.price }}</p>
-                <p><strong>Total:</strong> {{ order.quantity|floatformat:2|add:""|floatformat:2|add:order.item.price }}</p>
-                <p><strong>Order Time:</strong> {{ order.timestamp }}</p>
-            </div>
-
-            <div class="print-button">
-                <button onclick="window.print()">Print Receipt</button>
-            </div>
+{% if error %}
+    <div class="receipt">
+        <h2 class="error">{{ error }}</h2>
+    </div>
+{% else %}
+    <div class="receipt">
+        <h2>Lasco Restaurant</h2>
+        <hr>
+        <div class="details">
+            <p><strong>Customer:</strong> {{ order.customer_name }}</p>
+            <p><strong>Phone:</strong> {{ order.phone }}</p>
+            <p><strong>Food Item:</strong> {{ order.item.name }}</p>
+            <p><strong>Quantity:</strong> {{ order.quantity }}</p>
+            <p><strong>Unit Price:</strong> KES {{ order.item.price|floatformat:2 }}</p>
+            <p><strong>Total:</strong> KES {{ total_price|floatformat:2 }}</p>
+            <p><strong>Order Time:</strong> {{ order.order_time }}</p>
         </div>
-    {% endif %}
+
+        {% if order.payment_status == "Paid" %}
+            <div class="success">
+                Payment Received (M-Pesa code): <span style="letter-spacing: 3px;">{{ order.mpesa_code }}</span><br>
+                Payment Time: {{ order.payment_time|date:"M d, Y H:i:s" }}
+            </div>
+        {% else %}
+            <form method="POST" action="{% url 'process_payment' order.id %}" class="payment-form" novalidate>
+                {% csrf_token %}
+                <label for="mpesa_code">Till No- 23456 cdEnter M-Pesa Payment Code:</label><br>
+                <input 
+                    type="text" 
+                    name="mpesa_code" 
+                    id="mpesa_code"
+                    maxlength="20" 
+                    pattern="[A-Z0-9]{10,20}" 
+                    placeholder="e.g. AB12CD34EF56" 
+                    required 
+                    autofocus
+                    title="M-Pesa code should be 10-20 uppercase letters or digits"
+                >
+                <button type="submit">Submit Payment</button>
+            </form>
+        {% endif %}
+
+        <div class="print-button">
+            <button onclick="window.print()">Print Receipt</button>
+        </div>
+    </div>
+{% endif %}
 </body>
 </html>

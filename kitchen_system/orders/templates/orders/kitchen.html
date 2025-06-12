@@ -50,12 +50,25 @@
     <form method="POST" action="{% url 'place_order' %}" id="order-form">
         {% csrf_token %}
         <input type="hidden" name="item_id" id="item_id" />
+        
+        <label for="item_name">Item:</label>
+        <input type="text" id="item_name" readonly />
+
+        <label for="item_price">Price (per item):</label>
+        <input type="text" id="item_price" readonly />
+
         <label for="customer_name">Name:</label>
         <input type="text" name="customer_name" required />
+
         <label for="phone">Phone:</label>
         <input type="text" name="phone" required />
+
         <label for="quantity">Quantity:</label>
-        <input type="number" name="quantity" value="1" min="1" required />
+        <input type="number" name="quantity" id="quantity" value="1" min="1" required />
+
+        <label for="total_price">Total Price:</label>
+        <input type="text" id="total_price" readonly />
+
         <button type="submit" class="btn">Confirm Order</button>
     </form>
 </div>
@@ -81,17 +94,38 @@ function hidePopup() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    const orderPopup = document.getElementById('order-popup');
+    const itemIdInput = document.getElementById('item_id');
+    const itemNameInput = document.getElementById('item_name');
+    const itemPriceInput = document.getElementById('item_price');
+    const quantityInput = document.getElementById('quantity');
+    const totalPriceInput = document.getElementById('total_price');
+
     document.querySelectorAll('.order-btn').forEach(button => {
         button.addEventListener('click', function () {
             const itemId = button.getAttribute('data-id');
-            // Set the hidden input value correctly
-            document.getElementById('item_id').value = itemId;
+            const itemName = button.getAttribute('data-name');
+            const itemPrice = parseFloat(button.getAttribute('data-price'));
+
+            // Set the form inputs
+            itemIdInput.value = itemId;
+            itemNameInput.value = itemName;
+            itemPriceInput.value = itemPrice.toFixed(2);
+            quantityInput.value = 1;
+            totalPriceInput.value = itemPrice.toFixed(2);
+
             // Show the popup
-            document.getElementById('order-popup').style.display = 'block';
+            orderPopup.style.display = 'block';
         });
     });
 
-    // No AJAX submit here, form submits normally and redirects
+    // Update total price when quantity changes
+    quantityInput.addEventListener('input', function () {
+        const quantity = parseInt(quantityInput.value) || 1;
+        const price = parseFloat(itemPriceInput.value) || 0;
+        const total = quantity * price;
+        totalPriceInput.value = total.toFixed(2);
+    });
 });
 </script>
 

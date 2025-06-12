@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,126 +9,129 @@
     <script src="https://kit.fontawesome.com/5d065a92dc.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'orders/kitchen.css' %}" />
 </head>
+
 <body>
-<header>
-    <div><h2 class="sp">Bloom kitchen</h2></div>
-    <nav>
-        <ul>
-            <li><a class="lik" href="{% url 'index' %}">Home</a></li>
-            <li><a class="lik" href="{% url 'kitchen' %}">Kitchen</a></li>
-            <li><a class="lik" href="{% url 'about' %}">About</a></li>
-            <li><a class="lik" href="{% url 'contact' %}">Contacts</a></li>
-        </ul>
-    </nav>
-    <div class="head"><p class="hd">Welcome to our kitchen</p></div>
-</header>
-
-{% for section in sections %}
-<section class="food">
-    {% for item in section %}
-    <div class="box">
-        <img src="{% static 'orders/images/' %}{{ item.image }}" alt="{{ item.name }}" class="ig" />
-        <div class="card-body">
-            <h1 class="card-title">{{ item.name }}</h1>
-            <p class="card-des">{{ item.description }}</p>
-            <p class="pr">price {{ item.price }} /=</p>
-            <button 
-                class="order-btn" 
-                data-id="{{ item.id }}" 
-                data-name="{{ item.name }}" 
-                data-price="{{ item.price }}">
-                <i class="fa-solid fa-plus" id="i"></i>
-            </button>
+    <header>
+        <div>
+            <h2 class="sp">Bloom kitchen</h2>
         </div>
-    </div>
+        <nav>
+            <ul>
+                <li><a class="lik" href="{% url 'index' %}">Home</a></li>
+                <li><a class="lik" href="{% url 'kitchen' %}">Kitchen</a></li>
+                <li><a class="lik" href="{% url 'about' %}">About</a></li>
+                <li><a class="lik" href="{% url 'contact' %}">Contacts</a></li>
+            </ul>
+        </nav>
+        <div class="head">
+            <p class="hd">Welcome to our kitchen</p>
+        </div>
+    </header>
+
+    {% for section in sections %}
+    <section class="food">
+        {% for item in section %}
+        <div class="box">
+            <img src="{% static 'orders/images/' %}{{ item.image }}" alt="{{ item.name }}" class="ig" />
+            <div class="card-body">
+                <h1 class="card-title">{{ item.name }}</h1>
+                <p class="card-des">{{ item.description }}</p>
+                <p class="pr">price {{ item.price }} /=</p>
+                <button class="order-btn" data-id="{{ item.id }}" data-name="{{ item.name }}"
+                    data-price="{{ item.price }}">
+                    <i class="fa-solid fa-plus" id="i"></i>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
     {% endfor %}
-</section>
-{% endfor %}
 
-<!-- Order Form Popup -->
-<div id="order-popup" style="display:none;">
-    <span id="popup-close" onclick="hidePopup()">×</span>
-    <form method="POST" action="{% url 'place_order' %}" id="order-form">
-        {% csrf_token %}
-        <input type="hidden" name="item_id" id="item_id" />
-        
-        <label for="item_name">Item:</label>
-        <input type="text" id="item_name" readonly />
+    <!-- Order Form Popup -->
+    <div id="order-popup" style="display:none;">
+        <span id="popup-close" onclick="hidePopup()">×</span>
+        <form method="POST" action="{% url 'place_order' %}" id="order-form">
+            {% csrf_token %}
+            <input type="hidden" name="item_id" id="item_id" />
 
-        <label for="item_price">Price (per item):</label>
-        <input type="text" id="item_price" readonly />
+            <label for="item_name">Item:</label>
+            <input type="text" id="item_name" readonly />
 
-        <label for="customer_name">Name:</label>
-        <input type="text" name="customer_name" required />
+            <label for="item_price">Price (per item):</label>
+            <input type="text" id="item_price" readonly />
 
-        <label for="phone">Phone:</label>
-        <input type="text" name="phone" required />
+            <label for="customer_name">Name:</label>
+            <input type="text" name="customer_name" required />
 
-        <label for="quantity">Quantity:</label>
-        <input type="number" name="quantity" id="quantity" value="1" min="1" required />
+            <label for="phone">Phone:</label>
+            <input type="text" name="phone" required />
 
-        <label for="total_price">Total Price:</label>
-        <input type="text" id="total_price" readonly />
+            <label for="quantity">Quantity:</label>
+            <input type="number" name="quantity" id="quantity" value="1" min="1" required />
 
-        <button type="submit" class="btn">Confirm Order</button>
-    </form>
-</div>
+            <label for="total_price">Total Price:</label>
+            <input type="text" id="total_price" readonly />
 
-<div id="confirmation" style="display:none;">Order placed successfully!</div>
-
-<footer>
-    <div class="socials">
-        <h>connect</h>
-        <a class="wat" href="#"><i class="fa-brands fa-whatsapp"></i> whatsapp</a> 
-        <a class="ins" href="#"><i class="fa-brands fa-instagram"></i> instagram</a>
-        <a class="fab" href="#"><i class="fa-brands fa-facebook"></i> facebook</a>
+            <button type="submit" class="btn">Confirm Order</button>
+        </form>
     </div>
-    <div class="location">
-        <h>location</h>
-        <p class="lct">kenya - mombasa county <br /> bamburi area</p>
-    </div>
-</footer>
 
-<script>
-function hidePopup() {
-    document.getElementById('order-popup').style.display = 'none';
-}
+    <div id="confirmation" style="display:none;">Order placed successfully!</div>
 
-document.addEventListener('DOMContentLoaded', function() {
-    const orderPopup = document.getElementById('order-popup');
-    const itemIdInput = document.getElementById('item_id');
-    const itemNameInput = document.getElementById('item_name');
-    const itemPriceInput = document.getElementById('item_price');
-    const quantityInput = document.getElementById('quantity');
-    const totalPriceInput = document.getElementById('total_price');
+    <footer>
+        <div class="socials">
+            <h>connect</h>
+            <a class="wat" href="#"><i class="fa-brands fa-whatsapp"></i> whatsapp</a>
+            <a class="ins" href="#"><i class="fa-brands fa-instagram"></i> instagram</a>
+            <a class="fab" href="#"><i class="fa-brands fa-facebook"></i> facebook</a>
+        </div>
+        <div class="location">
+            <h>location</h>
+            <p class="lct">kenya - mombasa county <br /> bamburi area</p>
+        </div>
+    </footer>
 
-    document.querySelectorAll('.order-btn').forEach(button => {
-        button.addEventListener('click', function () {
-            const itemId = button.getAttribute('data-id');
-            const itemName = button.getAttribute('data-name');
-            const itemPrice = parseFloat(button.getAttribute('data-price'));
+    <script>
+        function hidePopup() {
+            document.getElementById('order-popup').style.display = 'none';
+        }
 
-            // Set the form inputs
-            itemIdInput.value = itemId;
-            itemNameInput.value = itemName;
-            itemPriceInput.value = itemPrice.toFixed(2);
-            quantityInput.value = 1;
-            totalPriceInput.value = itemPrice.toFixed(2);
+        document.addEventListener('DOMContentLoaded', function () {
+            const orderPopup = document.getElementById('order-popup');
+            const itemIdInput = document.getElementById('item_id');
+            const itemNameInput = document.getElementById('item_name');
+            const itemPriceInput = document.getElementById('item_price');
+            const quantityInput = document.getElementById('quantity');
+            const totalPriceInput = document.getElementById('total_price');
 
-            // Show the popup
-            orderPopup.style.display = 'block';
+            document.querySelectorAll('.order-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const itemId = button.getAttribute('data-id');
+                    const itemName = button.getAttribute('data-name');
+                    const itemPrice = parseFloat(button.getAttribute('data-price'));
+
+                    // Set the form inputs
+                    itemIdInput.value = itemId;
+                    itemNameInput.value = itemName;
+                    itemPriceInput.value = itemPrice.toFixed(2);
+                    quantityInput.value = 1;
+                    totalPriceInput.value = itemPrice.toFixed(2);
+
+                    // Show the popup
+                    orderPopup.style.display = 'block';
+                });
+            });
+
+            // Update total price when quantity changes
+            quantityInput.addEventListener('input', function () {
+                const quantity = parseInt(quantityInput.value) || 1;
+                const price = parseFloat(itemPriceInput.value) || 0;
+                const total = quantity * price;
+                totalPriceInput.value = total.toFixed(2);
+            });
         });
-    });
-
-    // Update total price when quantity changes
-    quantityInput.addEventListener('input', function () {
-        const quantity = parseInt(quantityInput.value) || 1;
-        const price = parseFloat(itemPriceInput.value) || 0;
-        const total = quantity * price;
-        totalPriceInput.value = total.toFixed(2);
-    });
-});
-</script>
+    </script>
 
 </body>
+
 </html>

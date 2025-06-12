@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sales Report PDF</title>
+    <style>
+        body {
+            font-family: DejaVu Sans, sans-serif;
+            margin: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #333;
+            padding: 6px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #eee;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Sales Report</h1>
+
+
+    {% if start_date or end_date %}
+    <p><strong>Date Range:</strong>
+        {% if start_date %} From {{ start_date }} {% endif %}
+        {% if end_date %} to {{ end_date }} {% endif %}
+    </p>
+    {% endif %}
+
+    <p><strong>Total Sales:</strong> KES {{ total_sales }}</p>
+    <p><strong>Start Date:</strong> {{ start_date|default:"N/A" }}</p>
+    <p><strong>End Date:</strong> {{ end_date|default:"N/A" }}</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>Order Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.customer_name }}</td>
+                <td>{{ order.item.name }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>KES {{ order.computed_amount }}</td>
+                <td>{{ order.order_time }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No orders available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+
+</html>

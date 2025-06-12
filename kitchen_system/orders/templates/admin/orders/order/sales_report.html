@@ -11,6 +11,26 @@
 {% block content %}
 <h1>Sales Report</h1>
 <p><strong>Total Sales:</strong> KES {{ total_sales }}</p>
+<p><strong>Total Orders:</strong> {{ total_orders }}</p>
+
+<form method="get" style="margin-bottom: 20px;">
+    <label for="start_date">Start date:</label>
+    <input type="date" name="start_date" value="{{ start_date }}">
+
+    <label for="end_date">End date:</label>
+    <input type="date" name="end_date" value="{{ end_date }}">
+
+    <button type="submit">Filter</button>
+
+    {% if orders %}
+    <a href="{% url 'admin:sales-report-pdf' %}?start_date={{ start_date }}&end_date={{ end_date }}" class="button"
+        style="margin-left: 20px; background-color: #4CAF50; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none;">
+        Download PDF
+    </a>
+    {% endif %}
+</form>
+
+
 
 <table id="salesTable" class="display">
     <thead>

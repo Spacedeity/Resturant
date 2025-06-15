@@ -42,7 +42,6 @@
 
     <h1>Sales Report</h1>
 
-
     {% if start_date or end_date %}
     <p><strong>Date Range:</strong>
         {% if start_date %} From {{ start_date }} {% endif %}
@@ -50,9 +49,15 @@
     </p>
     {% endif %}
 
+    {% if selected_item %}
+    <p><strong>Food Item:</strong> {{ selected_item }}</p>
+    {% endif %}
+
+    {% if selected_payment_status and selected_payment_status != 'All' %}
+    <p><strong>Payment Status:</strong> {{ selected_payment_status }}</p>
+    {% endif %}
+
     <p><strong>Total Sales:</strong> KES {{ total_sales }}</p>
-    <p><strong>Start Date:</strong> {{ start_date|default:"N/A" }}</p>
-    <p><strong>End Date:</strong> {{ end_date|default:"N/A" }}</p>
 
     <table>
         <thead>
@@ -61,6 +66,7 @@
                 <th>Item</th>
                 <th>Quantity</th>
                 <th>Amount</th>
+                <th>Payment Status</th>
                 <th>Order Time</th>
             </tr>
         </thead>
@@ -71,11 +77,12 @@
                 <td>{{ order.item.name }}</td>
                 <td>{{ order.quantity }}</td>
                 <td>KES {{ order.computed_amount }}</td>
+                <td>{{ order.payment_status }}</td>
                 <td>{{ order.order_time }}</td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="5">No orders available.</td>
+                <td colspan="6">No orders available.</td>
             </tr>
             {% endfor %}
         </tbody>

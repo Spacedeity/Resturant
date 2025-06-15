@@ -78,7 +78,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'kitchen_db',
         'USER': 'root',
-        'PASSWORD': 'Soila@2025',
+        'PASSWORD': 'Spacedeity@312#',
         'HOST': 'localhost',
         'PORT': '3306',
     }

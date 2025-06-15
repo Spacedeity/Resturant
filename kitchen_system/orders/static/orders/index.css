@@ -7,18 +7,19 @@ body{
 
     display: flex;
     flex-direction: column;
+    background-color: #dcdcdc;
 }
 
 
 
 .header{
-    height: 50px;
+    height: 60px;
     display: flex;
     z-index: 1;
     position: sticky;
     align-items: center;
     justify-content:flex-end ;
-    background-color: aliceblue;
+    background-image: linear-gradient(to right, #434343 0%, black 100%);
     
 }
 .sp{
@@ -50,7 +51,7 @@ nav li{
     /* background-color: rgb(14, 130, 231); */
 }
  nav .lik{
-    color: #1d0a0a;
+    color: #ffffff;
     font-size: 18px;
     padding:5px 10px;
     font-weight: 500;
@@ -62,8 +63,9 @@ nav li{
 
 .lik:hover{
  color: rgb(250, 252, 253);
- background-color: rgb(171, 147, 177);
+ background-color: rgb(44, 43, 44);
 }
+
 
 
 .sec1{
@@ -75,7 +77,7 @@ nav li{
     align-items: center;
     background-repeat:no-repeat;
     background-size: cover;
-    background-image: url(images/pic1.jpg);
+    background-image: url(images/b2.jpg);
 }
 
 
@@ -123,14 +125,14 @@ h1{
 
 
 p{
-        color: #00ff15;
+        color: #010101;
        font-weight: 200px;
        font-size: 20px;
        
     }
 
  h2{
-        color: rgb(0, 90, 8);
+        color:#000000;
         font-size: 30px;
         font-style: oblique;
         font-family:georgia ;
@@ -140,7 +142,7 @@ p{
     
 
  .desc{
-     color:#494d4a;
+     color:#fdfdfd;
     font-weight: 200px;
     font-size: 20px;
     
@@ -152,7 +154,7 @@ p{
     margin: 10px;
     display: flex;
     align-items: center;
-    background-color: rgb(195, 207, 197);
+    background-color:#cc1313;
    
 }
 
@@ -168,7 +170,7 @@ p{
     justify-content: center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url(images/pic2.jpg);
+    background-image: url(images/hl.jpg);
  
     
     
@@ -196,7 +198,7 @@ p{
     display: flex;
     align-items: center;
     overflow-x: hidden;
-    background-color: rgb(181, 202, 184);
+    background-color: #DB3535;
    
 }
 
@@ -233,7 +235,7 @@ p{
 
 .list{
 
-    color:#494d4a;
+    color:#ffffff;
     font-style: italic;
     font-family: georgia;
     list-style-type: none;
@@ -246,7 +248,7 @@ p{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(181, 202, 184);
+    background-color:#DB3535;
 }
 
 h3{
@@ -266,7 +268,7 @@ h3{
     margin: 30px;
     overflow-y: hidden;
     scrollbar-width:none;
-    background-color: #dcfaf3;
+    background-color:#010300;
 }
 .box2{
 
@@ -275,7 +277,7 @@ h3{
     margin: 30px;
     overflow-y: hidden;
     scrollbar-width:none;
-    background-color: #dcfaf3;
+    background-color: #010300;
 }
 .box3{
 
@@ -284,7 +286,7 @@ h3{
     margin: 30px;
     overflow-y: hidden;
     scrollbar-width:none;
-    background-color: #dcfaf3;
+    background-color: #010300;
 }
 .card{
     width: 300px;
@@ -311,7 +313,7 @@ h3{
 
 .c-title{
     margin: 5px;
-    color: #3bb830;
+    color: #f6faf6;
     font-weight: 300;
     font-size: 20px;
     font-style: oblique;
@@ -319,7 +321,7 @@ h3{
 }
 .c-text{
     margin-left: 5px;
-    color: #1d0a0a;
+    color: #b0a0a0;
     font-size: 18px;
     font-weight: 200;
     font-family: georgia;
@@ -413,7 +415,7 @@ footer{
     display: flex;
     height: 200px;
     justify-content:space-evenly;
-    background-color: #e2620d;
+    background-color: #12100e;
 }
 
 /* making it responsive */

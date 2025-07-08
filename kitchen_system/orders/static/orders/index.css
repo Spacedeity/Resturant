@@ -125,14 +125,14 @@ h1{
 
 
 p{
-        color: #010101;
+        color: #0D2035;
        font-weight: 200px;
        font-size: 20px;
        
     }
 
  h2{
-        color:#000000;
+        color:#0D2035;
         font-size: 30px;
         font-style: oblique;
         font-family:georgia ;
@@ -154,7 +154,7 @@ p{
     margin: 10px;
     display: flex;
     align-items: center;
-    background-color:#cc1313;
+    background-color: #F1C1C8;
    
 }
 
@@ -198,7 +198,7 @@ p{
     display: flex;
     align-items: center;
     overflow-x: hidden;
-    background-color: #DB3535;
+    background-color: #F1C1C8;
    
 }
 
@@ -248,12 +248,12 @@ p{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color:#DB3535;
+    background-color:#F1C1C8;
 }
 
 h3{
     
-    color: #000000;
+    color: #0D2035;
     font-family: georgia;
     font-style: oblique;
     font-weight: 500;
@@ -268,7 +268,7 @@ h3{
     margin: 30px;
     overflow-y: hidden;
     scrollbar-width:none;
-    background-color:#010300;
+    background-color:#faedcd;
 }
 .box2{
 
@@ -277,7 +277,7 @@ h3{
     margin: 30px;
     overflow-y: hidden;
     scrollbar-width:none;
-    background-color: #010300;
+    background-color: #faedcd;
 }
 .box3{
 
@@ -286,7 +286,7 @@ h3{
     margin: 30px;
     overflow-y: hidden;
     scrollbar-width:none;
-    background-color: #010300;
+    background-color:#faedcd;
 }
 .card{
     width: 300px;
@@ -313,7 +313,7 @@ h3{
 
 .c-title{
     margin: 5px;
-    color: #f6faf6;
+    color: #0D2035;
     font-weight: 300;
     font-size: 20px;
     font-style: oblique;
@@ -321,7 +321,7 @@ h3{
 }
 .c-text{
     margin-left: 5px;
-    color: #b0a0a0;
+    color: #0D2035;
     font-size: 18px;
     font-weight: 200;
     font-family: georgia;
@@ -415,7 +415,7 @@ footer{
     display: flex;
     height: 200px;
     justify-content:space-evenly;
-    background-color: #12100e;
+    background-color: #b08968;
 }
 
 /* making it responsive */
